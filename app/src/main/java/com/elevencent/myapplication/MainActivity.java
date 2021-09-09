@@ -4,17 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.chip.ChipGroup;
+import java.util.LinkedList;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-
-    String[] listTitles;
-    String[] list1;
-    String[] list2;
-    String[] list3;
+    
+    LinkedList<ItemList> listOfLists;
+    ItemList itemList1;
+    ItemList itemList2;
+    ItemList itemList3;
+    UUID user;
 
     RecyclerView recyclerView;
 
@@ -23,14 +24,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listTitles = new String[]{"Aldi", "Rossmann", "Aktiv"};
-        list1 = new String[]{"Eier", "Tomaten"};
-        list2 = new String[]{"Deo", "Spülung"};
-        list3 = new String[]{"Milch", "Kuchen", "Eier", "Käse", "Shampoo"};
+        user = UUID.randomUUID();
+        
+        listOfLists = new LinkedList<>();
+        itemList1 = new ItemList("Aktiv",user);
+        itemList2 = new ItemList("Rossmann",user);
+        itemList3 = new ItemList("Ikea",user);
+        listOfLists.add(itemList1);
+        listOfLists.add(itemList2);
+        listOfLists.add(itemList3);
+        
+        itemList1.getSet().add(new Item("Brot"));
+        itemList1.getSet().add(new Item("Milch"));
+        itemList1.getSet().add(new Item("Eier"));
+        itemList1.getSet().add(new Item("Nutella"));
+    
+        itemList2.getSet().add(new Item("Shampoo"));
+        itemList2.getSet().add(new Item("Handseife"));
+        itemList2.getSet().add(new Item("Wattestäbchen"));
+        itemList2.getSet().add(new Item("Essigreiniger"));
+    
+        itemList3.getSet().add(new Item("Teller"));
+        itemList3.getSet().add(new Item("Gläser"));
+        itemList3.getSet().add(new Item("Schokolade"));
+        itemList3.getSet().add(new Item("Hotdog"));
 
         recyclerView = findViewById(R.id.recycler_view_of_shopping_lists);
 
-        MyAdapter myAdapter = new MyAdapter(this, listTitles);
+        MyAdapter myAdapter = new MyAdapter(this, listOfLists);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this) {
         });

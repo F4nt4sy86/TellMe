@@ -10,14 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.LinkedList;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    String[] titles;
+    LinkedList<ItemList> listOfLists;
     Context context;
 
-    public MyAdapter(Context context, String[] titles) {
+    public MyAdapter(Context context, LinkedList<ItemList> listOfLists) {
         this.context = context;
-        this.titles = titles;
+        this.listOfLists=listOfLists;
     }
 
     @NonNull
@@ -30,14 +32,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int index) {
-        holder.title.setText(titles[holder.getAdapterPosition()]);
+        holder.title.setText(listOfLists.get(holder.getAdapterPosition()).getName());
         Intent intent = new Intent(context, ShoppingListActivity.class);
         holder.itemView.setOnClickListener(view -> context.startActivity(intent));
     }
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return listOfLists.size();
     }
 
 
