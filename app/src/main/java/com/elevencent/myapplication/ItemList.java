@@ -14,6 +14,7 @@ public class ItemList implements Serializable {
     private HashSet<Item> set;
     private UUID listUuid;
     private UUID creatorUuid;
+    private String name;
     
     /**
      * Constructor for ItemList.
@@ -22,7 +23,8 @@ public class ItemList implements Serializable {
      *
      * @since 09.09.2021
      */
-    public ItemList(UUID creatorUuid) {
+    public ItemList(String name, UUID creatorUuid) {
+        this.name = name;
         this.set = new HashSet<>();
         this.listUuid = UUID.randomUUID();
         this.creatorUuid = creatorUuid;
@@ -67,5 +69,9 @@ public class ItemList implements Serializable {
      */
     public UUID getCreatorUuid() {
         return creatorUuid;
+    }
+    
+    public String getName() {
+        return name;
     }
 }
