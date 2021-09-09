@@ -31,7 +31,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int index) {
         holder.title.setText(titles[holder.getAdapterPosition()]);
-        Intent intent = new Intent(context,Einkaufszettel.class);
+        Intent intent = new Intent(context, ShoppingListActivity.class);
         holder.itemView.setOnClickListener(view -> context.startActivity(intent));
     }
 
