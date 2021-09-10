@@ -2,6 +2,7 @@ package com.elevencent.myapplication;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -80,13 +81,26 @@ public class ItemList implements Parcelable {
         } else return new Parcelable[0];
     }
     
+    /**
+     * Constructor to take parcels.
+     *
+     * @param in parcel from some intent.
+     *
+     * @author Pieter Vogt
+     * @since 09.09.2021
+     */
     protected ItemList(Parcel in) {
-        this.set = (HashSet<Item>) parcelableArrayToHashSet(in.readParcelableArray(Item.class.getClassLoader()));
+        this.set = parcelableArrayToHashSet(in.readParcelableArray(Item.class.getClassLoader()));
         this.listUuid = UUID.fromString(in.readString());
         this.creatorUuid = UUID.fromString(in.readString());
         this.name = in.readString();
     }
     
+    /**
+     * The Creator for ItemList.java .
+     *
+     * @since 09.09.2021
+     */
     public static final Creator<ItemList> CREATOR = new Creator<ItemList>() {
         @Override
         public ItemList createFromParcel(Parcel in) {
@@ -135,15 +149,40 @@ public class ItemList implements Parcelable {
         return creatorUuid;
     }
     
+    /**
+     * Getter for String name.
+     *
+     * @return String name of the ItemList.
+     *
+     * @author Pieter Vogt
+     * @since 09.09.2021
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * I have no idea what this does.
+     *
+     * @return 0.
+     *
+     * @author Pieter Vogt
+     * @since 09.09.2021
+     */
     @Override
     public int describeContents() {
         return 0;
     }
     
+    /**
+     * Construcor of a parcel containing an ItemList.java .
+     *
+     * @param parcel Parcel containing an ItemList.
+     * @param i Some integer.
+     *
+     * @author Pieter Vogt
+     * @since 09.09.2021
+     */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeTypedArray(hashSetToParcelableArray(set), i);
