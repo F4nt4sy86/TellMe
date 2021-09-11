@@ -2,6 +2,7 @@ package com.elevencent.myapplication.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,11 @@ public class ADAPTER_ShoppingLists extends RecyclerView.Adapter<ADAPTER_Shopping
     public void onBindViewHolder(@NonNull MyViewHolder holder, int index) {
         holder.title.setText(listOfLists.get(holder.getAdapterPosition()).getName());
         
-        Intent intent = new Intent(context, ShoppingListActivity.class);
-        intent.putExtra("ItemList", listOfLists.get(holder.getAdapterPosition()));
-        
-        holder.itemView.setOnClickListener(view -> context.startActivity(intent));
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ShoppingListActivity.class);
+            intent.putExtra("ItemList", listOfLists.get(holder.getAdapterPosition()));
+            context.startActivity(intent);
+        });
     }
     
     @Override
