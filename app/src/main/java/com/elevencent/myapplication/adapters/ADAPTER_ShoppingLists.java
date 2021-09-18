@@ -49,8 +49,10 @@ public class ADAPTER_ShoppingLists extends RecyclerView.Adapter<ADAPTER_Shopping
         holder.title.setText(listOfLists.get(holder.getAdapterPosition()).getName());
         
         holder.itemView.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("ItemList", listOfLists.get(holder.getAdapterPosition()));
             Intent intent = new Intent(context, ShoppingListActivity.class);
-            intent.putExtra("ItemList", listOfLists.get(holder.getAdapterPosition()));
+            intent.putExtras(bundle);
             context.startActivity(intent);
         });
     }

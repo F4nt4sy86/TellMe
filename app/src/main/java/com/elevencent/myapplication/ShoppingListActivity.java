@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.widget.TextView;
 
 import com.google.android.material.chip.ChipGroup;
@@ -18,8 +19,9 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shoppinglist);
         
-        Intent intent = getIntent();
-        itemList = intent.getParcelableExtra("ItemList");
+        //itemList = getIntent().getParcelableExtra("ItemList");
+        
+        itemList = getIntent().getParcelableExtra("ItemList");
         
         TextView title = findViewById(R.id.concrete_title);
         title.setText(itemList.getName());

@@ -3,7 +3,9 @@ package com.elevencent.myapplication;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -47,13 +49,15 @@ public class ItemList implements Parcelable {
      */
     private HashSet<Item> parcelableArrayToHashSet(Parcelable[] parcelables) {
         //Order to write or read into/out of parcel: set, listUuid, creatorUuid, name
-        if (parcelables != null && parcelables.length != 0) {
+        if (parcelables == null || parcelables.length == 0) {
+            return new HashSet<>();
+        } else {
             HashSet<Item> items = new HashSet<>();
             for (Parcelable parcelable : parcelables) {
                 items.add((Item) parcelable);
             }
             return items;
-        } else return new HashSet<>();
+        }
     }
     
     /**
@@ -70,7 +74,9 @@ public class ItemList implements Parcelable {
      */
     private Parcelable[] hashSetToParcelableArray(HashSet<Item> items) {
         //Order to write or read into/out of parcel: set, listUuid, creatorUuid, name
-        if (items != null && !items.isEmpty()) {
+        if (items == null || items.isEmpty()) {
+            return new Parcelable[0];
+        } else {
             Parcelable[] parcelables = new Parcelable[items.size()];
             int index = 0;
             for (Item item : items) {
@@ -78,11 +84,43 @@ public class ItemList implements Parcelable {
                 index++;
             }
             return parcelables;
-        } else return new Parcelable[0];
+        }
+    }
+    
+    //Testweise mal Hashset <--> Liste  und schauen ob man so besser zu parcelable schreiben kann.
+    private List<Item> hashSetToList(HashSet<Item> itemHashSet) {
+        if (itemHashSet == null || itemHashSet.isEmpty()) {
+            return new ArrayList<>();
+        } else return new ArrayList<>(itemHashSet);
+    }
+    
+    private HashSet<Item> listToHashSet(List<Item> items) {
+        if (items == null || items.isEmpty()) {
+            return new HashSet<>();
+        } else return new HashSet<>(items);
     }
     
     /**
-     * Constructor to take parcels.
+     * Writing an ItemList to a given parcel.
+     * <p>
+     *
+     * @param parcel A parcel.
+     * @param i      Some integer.
+     *
+     * @author Pieter Vogt
+     * @since 09.09.2021
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeList(hashSetToList(this.set));
+        //  parcel.writeTypedArray(hashSetToParcelableArray(this.set), i);
+        parcel.writeString(listUuid.toString());
+        parcel.writeString(creatorUuid.toString());
+        parcel.writeString(name);
+    }
+    
+    /**
+     * Constructing an ItemList from a given parcel.
      *
      * @param in parcel from some intent.
      *
@@ -90,7 +128,8 @@ public class ItemList implements Parcelable {
      * @since 09.09.2021
      */
     protected ItemList(Parcel in) {
-        this.set = parcelableArrayToHashSet(in.readParcelableArray(Item.class.getClassLoader()));
+        // TODO: implement read of parcelable Arraylist.
+        this.set = parcelableArrayToHashSet(in.readParcelableArray(ItemList.class.getClassLoader())); //Old method to read parcelable. Replace and delete.
         this.listUuid = UUID.fromString(in.readString());
         this.creatorUuid = UUID.fromString(in.readString());
         this.name = in.readString();
@@ -174,20 +213,4 @@ public class ItemList implements Parcelable {
         return 0;
     }
     
-    /**
-     * Construcor of a parcel containing an ItemList.java .
-     *
-     * @param parcel Parcel containing an ItemList.
-     * @param i Some integer.
-     *
-     * @author Pieter Vogt
-     * @since 09.09.2021
-     */
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeTypedArray(hashSetToParcelableArray(set), i);
-        parcel.writeString(listUuid.toString());
-        parcel.writeString(creatorUuid.toString());
-        parcel.writeString(name);
-    }
 }
