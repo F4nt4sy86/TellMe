@@ -3,6 +3,7 @@ package com.elevencent.myapplication;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.UUID;
  * @since 09.09.2021
  */
 public class ItemList implements Parcelable {
-    private final HashSet<Item> set;
+    private final ArrayList<Item> itemArrayList;
     private final UUID listUuid;
     private final UUID creatorUuid;
     private final String name;
@@ -30,7 +31,7 @@ public class ItemList implements Parcelable {
      */
     public ItemList(String name, UUID creatorUuid) {
         this.name = name;
-        this.set = new HashSet<>();
+        this.itemArrayList = new ArrayList<>();
         this.listUuid = UUID.randomUUID();
         this.creatorUuid = creatorUuid;
     }
@@ -87,13 +88,26 @@ public class ItemList implements Parcelable {
         }
     }
     
-    //Testweise mal Hashset <--> Liste  und schauen ob man so besser zu parcelable schreiben kann.
+    /**
+     * Converts a HashSet to an ArrayList.
+     * @param itemHashSet HashSet of Items.
+     * @return ArrayList of Items.
+     * @since 19.09.2021
+     * @author Pieter Vogt
+     */
     private List<Item> hashSetToList(HashSet<Item> itemHashSet) {
         if (itemHashSet == null || itemHashSet.isEmpty()) {
             return new ArrayList<>();
         } else return new ArrayList<>(itemHashSet);
     }
     
+    /**
+     * Converts a List to a HashSet.
+     * @param items List of Items.
+     * @return HashSet of Items.
+     * @since 19.09.2021
+     * @author Pieter Vogt
+     */
     private HashSet<Item> listToHashSet(List<Item> items) {
         if (items == null || items.isEmpty()) {
             return new HashSet<>();
@@ -112,7 +126,7 @@ public class ItemList implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeList(hashSetToList(this.set));
+        parcel.writeList(this.itemArrayList);
         //  parcel.writeTypedArray(hashSetToParcelableArray(this.set), i);
         parcel.writeString(listUuid.toString());
         parcel.writeString(creatorUuid.toString());
@@ -128,8 +142,7 @@ public class ItemList implements Parcelable {
      * @since 09.09.2021
      */
     protected ItemList(Parcel in) {
-        // TODO: implement read of parcelable Arraylist.
-        this.set = parcelableArrayToHashSet(in.readParcelableArray(ItemList.class.getClassLoader())); //Old method to read parcelable. Replace and delete.
+        this.itemArrayList = in.readArrayList(ItemList.class.getClassLoader());
         this.listUuid = UUID.fromString(in.readString());
         this.creatorUuid = UUID.fromString(in.readString());
         this.name = in.readString();
@@ -160,8 +173,8 @@ public class ItemList implements Parcelable {
      * @author Pieter Vogt
      * @since 09.09.2021
      */
-    public HashSet<Item> getSet() {
-        return set;
+    public ArrayList<Item> getItemArrayList() {
+        return itemArrayList;
     }
     
     /**

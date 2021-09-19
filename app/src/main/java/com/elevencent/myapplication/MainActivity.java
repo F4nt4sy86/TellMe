@@ -36,20 +36,20 @@ public class MainActivity extends AppCompatActivity {
         listOfLists.add(itemList2);
         listOfLists.add(itemList3);
         
-        itemList1.getSet().add(new Item("Brot"));
-        itemList1.getSet().add(new Item("Milch"));
-        itemList1.getSet().add(new Item("Eier"));
-        itemList1.getSet().add(new Item("Nutella"));
+        itemList1.getItemArrayList().add(new Item("Brot"));
+        itemList1.getItemArrayList().add(new Item("Milch"));
+        itemList1.getItemArrayList().add(new Item("Eier"));
+        itemList1.getItemArrayList().add(new Item("Nutella"));
         
-        itemList2.getSet().add(new Item("Shampoo"));
-        itemList2.getSet().add(new Item("Handseife"));
-        itemList2.getSet().add(new Item("Wattestäbchen"));
-        itemList2.getSet().add(new Item("Essigreiniger"));
+        itemList2.getItemArrayList().add(new Item("Shampoo"));
+        itemList2.getItemArrayList().add(new Item("Handseife"));
+        itemList2.getItemArrayList().add(new Item("Wattestäbchen"));
+        itemList2.getItemArrayList().add(new Item("Essigreiniger"));
         
-        itemList3.getSet().add(new Item("Teller"));
-        itemList3.getSet().add(new Item("Gläser"));
-        itemList3.getSet().add(new Item("Schokolade"));
-        itemList3.getSet().add(new Item("Hotdog"));
+        itemList3.getItemArrayList().add(new Item("Teller"));
+        itemList3.getItemArrayList().add(new Item("Gläser"));
+        itemList3.getItemArrayList().add(new Item("Schokolade"));
+        itemList3.getItemArrayList().add(new Item("Hotdog"));
         
         recyclerView = findViewById(R.id.recycler_view_of_shopping_lists);
         
