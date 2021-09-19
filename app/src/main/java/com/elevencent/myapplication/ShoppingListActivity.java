@@ -14,17 +14,16 @@ public class ShoppingListActivity extends AppCompatActivity {
     
     ItemList itemList;
     ChipGroup chipGroup;
+    TextView title;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shoppinglist);
         
-        //itemList = getIntent().getParcelableExtra("ItemList");
-        
         itemList = getIntent().getParcelableExtra("ItemList");
         
-        TextView title = findViewById(R.id.concrete_title);
+        title = findViewById(R.id.concrete_title);
         title.setText(itemList.getName());
         chipGroup = findViewById(R.id.chip_group);
         for (Item item : itemList.getItemArrayList()) {
