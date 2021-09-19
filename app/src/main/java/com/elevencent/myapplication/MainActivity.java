@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.elevencent.myapplication.adapters.ADAPTER_ShoppingLists;
 
@@ -18,16 +21,17 @@ public class MainActivity extends AppCompatActivity {
     ItemList itemList2;
     ItemList itemList3;
     UUID user;
-    
+    Button button;
     RecyclerView recyclerView;
+    EditText editText;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        user = UUID.randomUUID();
-        
+    
+        recyclerView = findViewById(R.id.recycler_view_of_shopping_lists);
+        //Beginning temporary, hardcoded lists.
         listOfLists = new LinkedList<>();
         itemList1 = new ItemList("Aktiv", user);
         itemList2 = new ItemList("Rossmann", user);
@@ -50,12 +54,18 @@ public class MainActivity extends AppCompatActivity {
         itemList3.getItemArrayList().add(new Item("Gläser"));
         itemList3.getItemArrayList().add(new Item("Schokolade"));
         itemList3.getItemArrayList().add(new Item("Hotdog"));
+        //End
+        editText = findViewById(R.id.add_item_textfield);
+        user = UUID.randomUUID();
+        button = findViewById(R.id.Add_ItemList);
+        button.setOnClickListener(view -> listOfLists.add(new ItemList(editText.getText().toString(), UUID.randomUUID())));
         
-        recyclerView = findViewById(R.id.recycler_view_of_shopping_lists);
+        
         
         ADAPTER_ShoppingLists adapter = new ADAPTER_ShoppingLists(this, listOfLists);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this) {
         });
     }
+    
 }

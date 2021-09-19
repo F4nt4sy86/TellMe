@@ -2,5 +2,7 @@
     <string name="app_name">TellMe!</string>
     <string name="title">Title</string>
     <string name="add_item_text">hinzufügen</string>
+    <string name="Hinzufügen">Neue Liste</string>
+    <string name="neue_einkaufsliste">Neue Einkaufsliste</string>
 
 </resources>
