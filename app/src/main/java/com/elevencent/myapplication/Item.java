@@ -1,45 +1,52 @@
 package com.elevencent.myapplication;
 
-public class Item {
-    private String itemName;
-    private int itemCount;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public Item(String itemName) {
-        try {
-            changeItemName(itemName);
-        } catch (InvalidNameForItemException e) {
-            e.getCause();
-            e.printStackTrace();
+public class Item implements Parcelable {
+    private String name;
+    
+    public Item(String name) {
+        this.name=name;
+    }
+    
+    protected Item(Parcel in) {
+        name = in.readString();
+    }
+    
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            //Order to read/write from/to parcel: itemName, itemCount
+            String name = in.readString();
+            return new Item(name);
         }
-        this.itemCount = 1;
-    }
-
-    public void increaseItemCount(int numberToAdd) throws InvalidNumberToAddException {
-        if (numberToAdd < 1) {
-            System.out.println("Cannot add a number smaller than 1.");
-            throw new InvalidNumberToAddException();
-        } else this.itemCount += numberToAdd;
-    }
-
-    public void decreaseItemCount(int numberToSubtract) throws InvalidNumberToAddException {
-        if (numberToSubtract < 1) {
-            System.out.println("Cannot subtract a number smaller than 1.");
-            throw new InvalidNumberToAddException();
-        } else this.itemCount -= numberToSubtract;
-    }
-
+        
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
+    
     public void changeItemName(String newItemName) throws InvalidNameForItemException {
         if (newItemName == null || newItemName.trim().isEmpty()) {
             System.out.println("Cannot change item-name to empty string.");
             throw new InvalidNameForItemException();
-        } else this.itemName = newItemName.trim();
+        } else this.name = newItemName.trim();
+    }
+    
+    public String getName() {
+        return name;
     }
 
-    public String getItemName() {
-        return itemName;
+    @Override
+    public int describeContents() {
+        return 0;
     }
-
-    public int getItemCount() {
-        return itemCount;
+    
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        //Order to read/write from/to parcel: itemName, itemCount
+        parcel.writeString(name);
     }
 }
