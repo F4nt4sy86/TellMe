@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.elevencent.myapplication.adapters.ADAPTER_ShoppingLists;
+import com.google.android.material.chip.Chip;
 
 import java.util.LinkedList;
 import java.util.UUID;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ItemList itemList2;
     ItemList itemList3;
     UUID user;
-    Button button;
+    Button addNewShoppingList;
     RecyclerView recyclerView;
     EditText editText;
     
@@ -61,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.new_shopping_list_name);
         editText.setEnabled(true);
         
-        //Add-button for adding new shopping-lists.
-        button = findViewById(R.id.Add_ItemList);
-        button.setOnClickListener(view -> {
+        //Button for adding new shopping-lists.
+        addNewShoppingList = findViewById(R.id.Add_ItemList);
+        addNewShoppingList.setOnClickListener(view -> {
             if (editText.getText().toString().isEmpty()) {
                 return;
             }
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this) {
         });
-        
     }
     
 }

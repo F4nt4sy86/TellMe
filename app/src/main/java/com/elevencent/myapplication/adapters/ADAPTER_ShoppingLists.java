@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elevencent.myapplication.ItemList;
 import com.elevencent.myapplication.R;
 import com.elevencent.myapplication.ShoppingListActivity;
+import com.google.android.material.chip.Chip;
 
 import java.util.LinkedList;
 
@@ -36,7 +37,7 @@ public class ADAPTER_ShoppingLists extends RecyclerView.Adapter<ADAPTER_Shopping
     }
     
     /**
-     * Initialises the ViewHolder and gives it a clickListener.
+     * Binds data to the ViewHolder and creates onClickListeners for the items in it.
      *
      * @param holder The ViewHolder to populate.
      * @param index  The index of the ViewHolder.
@@ -48,12 +49,18 @@ public class ADAPTER_ShoppingLists extends RecyclerView.Adapter<ADAPTER_Shopping
     public void onBindViewHolder(@NonNull MyViewHolder holder, int index) {
         holder.title.setText(listOfLists.get(holder.getAdapterPosition()).getName());
         
-        holder.itemView.setOnClickListener(view -> {
+        holder.title.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putParcelable("ItemList", listOfLists.get(holder.getAdapterPosition()));
             Intent intent = new Intent(context, ShoppingListActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
+        });
+        
+        holder.deleteButton.setOnClickListener(view -> {
+            int temp = holder.getAdapterPosition();
+            listOfLists.remove(temp);
+            this.notifyItemRemoved(temp);
         });
     }
     
@@ -62,14 +69,20 @@ public class ADAPTER_ShoppingLists extends RecyclerView.Adapter<ADAPTER_Shopping
         return listOfLists.size();
     }
     
-    
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Container for all data representing one shoppinglist in the recyclerview.
+     *
+     * @author Pieter Vogt
+     * @since 09.09.2021
+     */
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        Chip deleteButton;
         
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title_text);
+            deleteButton = itemView.findViewById(R.id.delete_button);
         }
     }
-    
 }
