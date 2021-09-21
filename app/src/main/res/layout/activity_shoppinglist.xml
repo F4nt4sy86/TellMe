@@ -21,7 +21,7 @@
 
     <EditText
         android:id="@+id/add_item_textfield"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="name"
         android:ems="10"
@@ -30,21 +30,32 @@
         android:minHeight="48dp"
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/concrete_title" />
+        app:layout_constraintEnd_toStartOf="@id/add_item_button"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/concrete_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_item_textfield">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/add_item_button">
     </com.google.android.material.chip.ChipGroup>
+
+    <Button
+        android:id="@+id/add_item_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Hinzufügen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="519dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -234,12 +234,4 @@ public class ItemList implements Parcelable {
     public int describeContents() {
         return 0;
     }
-    
-    public void sortByChecked() {
-        Collections.sort(itemArrayList, (i1, i2) -> {
-            if (!i1.getChecked() && i2.getChecked()) return -1;
-            else if (i1.getChecked() && !i2.getChecked()) return 1;
-            else return 0;
-        });
-    }
 }
