@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +22,7 @@ public class ItemList implements Parcelable {
     private final UUID listUuid;
     private final UUID creatorUuid;
     private final String name;
+    private Boolean ticked;
     
     /**
      * Constructor for ItemList.
@@ -90,10 +93,13 @@ public class ItemList implements Parcelable {
     
     /**
      * Converts a HashSet to an ArrayList.
+     *
      * @param itemHashSet HashSet of Items.
+     *
      * @return ArrayList of Items.
-     * @since 19.09.2021
+     *
      * @author Pieter Vogt
+     * @since 19.09.2021
      */
     private List<Item> hashSetToList(HashSet<Item> itemHashSet) {
         if (itemHashSet == null || itemHashSet.isEmpty()) {
@@ -103,10 +109,13 @@ public class ItemList implements Parcelable {
     
     /**
      * Converts a List to a HashSet.
+     *
      * @param items List of Items.
+     *
      * @return HashSet of Items.
-     * @since 19.09.2021
+     *
      * @author Pieter Vogt
+     * @since 19.09.2021
      */
     private HashSet<Item> listToHashSet(List<Item> items) {
         if (items == null || items.isEmpty()) {
@@ -226,4 +235,11 @@ public class ItemList implements Parcelable {
         return 0;
     }
     
+    public void sortByChecked() {
+        Collections.sort(itemArrayList, (i1, i2) -> {
+            if (!i1.getChecked() && i2.getChecked()) return -1;
+            else if (i1.getChecked() && !i2.getChecked()) return 1;
+            else return 0;
+        });
+    }
 }

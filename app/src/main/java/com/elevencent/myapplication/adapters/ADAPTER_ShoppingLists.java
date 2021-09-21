@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elevencent.myapplication.ItemList;
 import com.elevencent.myapplication.R;
-import com.elevencent.myapplication.ShoppingListActivity;
+import com.elevencent.myapplication.activities.ShoppingListActivity;
 import com.google.android.material.chip.Chip;
 
 import java.util.LinkedList;

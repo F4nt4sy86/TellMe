@@ -1,4 +1,4 @@
-package com.elevencent.myapplication;
+package com.elevencent.myapplication.exceptions;
 
 public class SlotAlreadyFullException extends Exception {
 }
